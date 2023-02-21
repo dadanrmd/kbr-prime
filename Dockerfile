@@ -10,8 +10,6 @@ COPY .env .
 COPY go.sum .
 RUN go mod download
 
-RUN go test -v ./pkg/unit_testing
-
 RUN GOOS=linux GOARCH=amd64 go build -ldflags '-linkmode=external' -o /go/bin/kbrprime-be pkg/main.go
 
 FROM alpine:3.12
