@@ -12,12 +12,12 @@ RUN go mod download
 
 RUN GOOS=linux GOARCH=amd64 go build -o main .
 
-FROM alpine:3.12
+FROM golang:1.18-alpine
 
 RUN apk add --no-cache tzdata ca-certificates libc6-compat
 
-COPY --from=builder /go/bin/kbrprime-be /
-COPY --from=builder /go/src/kbrprime-be/params/.env /params/.env
+COPY --from=builder $PWD /usr/local/go/bin/kbrprime-be
+COPY --from=builder $PWD/params/.env /usr/local/go/src/kbrprime-be/params/.env
 
 ENTRYPOINT ["/go/bin/kbrprime-be"]
 
