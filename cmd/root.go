@@ -96,7 +96,7 @@ func loadEnv(envName string) {
 	}
 
 	_, file, _, _ := runtime.Caller(0)
-	rootPath := path.Join(file, "..") + dotenvPath
+	rootPath := path.Join(file, "..", "..") + dotenvPath
 	log.Info().Msg("path env =>" + rootPath)
 	err := godotenv.Load(rootPath)
 	if err != nil {
