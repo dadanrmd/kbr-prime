@@ -1,4 +1,4 @@
-FROM golang:1.16.2-alpine3.12 AS builder
+FROM golang:1.18.2-alpine3.12 AS builder
 RUN apk update && apk add --no-cache git && apk add gcc libc-dev
 
 WORKDIR $GOPATH/src/kbrprime-be
