@@ -1,30 +1,25 @@
-FROM golang:1.18-alpine AS builder
-ARG APP_DIR=kbrprime-be
+FROM golang:1.16.2-alpine3.12 AS builder
+RUN apk update && apk add --no-cache git && apk add gcc libc-dev
 
-RUN apk update && apk add tzdata
+WORKDIR $GOPATH/src/kbrprime-be
+RUN pwd
+COPY . .
+ENV GOSUMDB=off
+COPY go.mod .
+COPY .env .
+COPY go.sum .
+RUN go mod download
 
-WORKDIR /
+RUN go test -v ./pkg/unit_testing
 
-COPY ./$APP_DIR ./app
+RUN GOOS=linux GOARCH=amd64 go build -ldflags '-linkmode=external' -o /go/bin/kbrprime-be pkg/main.go
 
-WORKDIR /app
+FROM alpine:3.12
 
-RUN go get -d -v
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o kbrprime-be
+RUN apk add --no-cache tzdata ca-certificates libc6-compat
 
-###############################
-FROM golang:1.18-alpine
-ARG APP_DIR=kbrprime-be
-COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
-COPY --from=builder /app/kbrprime-be /app/kbrprime-be
+COPY --from=builder /go/bin/kbrprime-be /go/bin/kbrprime-be
+COPY --from=builder /go/src/kbrprime-be/.env /go/src/kbrprime-be/.env
 
-# put env production to /app/params/.env
-WORKDIR /app
-RUN mkdir params
-COPY ./$APP_DIR/migrations/sql/ migrations/sql
-RUN mkdir -p /app/logs
+ENTRYPOINT ["/go/bin/kbrprime-be"]
 
-# this port should be the same with on env
-# EXPOSE 38019
-
-ENTRYPOINT ["/app/kbrprime-be"]
