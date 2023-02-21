@@ -10,7 +10,7 @@ COPY params/.env /params/.env
 COPY go.sum .
 RUN go mod download
 
-RUN GOOS=linux GOARCH=amd64 go build -ldflags '-linkmode=external' -o main .
+RUN GOOS=linux GOARCH=amd64 go build -o main .
 
 FROM alpine:3.12
 
