@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path"
+	"runtime"
 
 	"github.com/rizkianakbar/kbrprime-be/config"
 	"github.com/rizkianakbar/kbrprime-be/internal/app/appcontext"
@@ -87,13 +89,16 @@ func loadEnv(envName string) {
 		},
 	)
 
-	dotenvPath := "params/.env"
+	dotenvPath := "/params/.env"
 
 	if envName == "test" {
-		dotenvPath = "params/.env.test"
+		dotenvPath = "/params/.env.test"
 	}
 
-	err := godotenv.Load(dotenvPath)
+	_, file, _, _ := runtime.Caller(0)
+	rootPath := path.Join(file, "..") + dotenvPath
+	log.Info().Msg("path env =>" + rootPath)
+	err := godotenv.Load(rootPath)
 	if err != nil {
 		log.Error().Msg("Error loading .env file")
 	}
