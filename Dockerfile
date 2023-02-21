@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine AS builder
+FROM golang:1.18-alpine AS builder
 ARG APP_DIR=kbrprime-be
 
 RUN apk update && apk add tzdata
@@ -13,7 +13,7 @@ RUN go get -d -v
 RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o kbrprime-be
 
 ###############################
-FROM golang:1.16-alpine
+FROM golang:1.18-alpine
 ARG APP_DIR=kbrprime-be
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /app/kbrprime-be /app/kbrprime-be
