@@ -11,6 +11,6 @@ RUN GOOS=linux GOARCH=amd64 go build -ldflags '-linkmode=external' -o /go/bin/kb
 FROM alpine:3.12
 RUN apk add --no-cache tzdata ca-certificates libc6-compat
 COPY --from=builder /go/bin/kbrprime-be /go/bin/kbrprime-be
-COPY --from=builder /go/src/kbrprime-be/.env /go/src/kbrprime-be/.env
+COPY --from=builder /go/src/kbrprime-be/params/.env /go/src/kbrprime-be/params/.env
 
 ENTRYPOINT ["/go/bin/kbrprime-be"]
