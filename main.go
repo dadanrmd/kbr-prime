@@ -2,6 +2,8 @@ package main
 
 import (
 	"os"
+	"path"
+	"runtime"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -21,7 +23,10 @@ func main() {
 		},
 	)
 
-	err := godotenv.Load("params/.env")
+	_, file, _, _ := runtime.Caller(0)
+	rootPath := path.Join(file, "..")
+	log.Info().Msg("path env =>" + rootPath)
+	err := godotenv.Load(rootPath + "/params/.env")
 	if err != nil {
 		log.Error().Msg("Error loading .env file")
 	}
