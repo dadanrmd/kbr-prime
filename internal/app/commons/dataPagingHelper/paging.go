@@ -1,6 +1,6 @@
-//Datapaging is a helper to
-//create a pagination for data retrieve from repository layer
-//Author : Gilang Prambudi - Jul, 18 2020
+// Datapaging is a helper to
+// create a pagination for data retrieve from repository layer
+// Author : Gilang Prambudi - Jul, 18 2020
 package datapaging
 
 import (
@@ -26,8 +26,8 @@ type Datapaging struct {
 	DateEarliest *time.Time
 }
 
-//New will return a new pagination object specified with pagination,
-//limit and order by field
+// New will return a new pagination object specified with pagination,
+// limit and order by field
 func New(limit, page int, orderBy []string) Datapaging {
 	return Datapaging{
 		Limit:   limit,
@@ -36,12 +36,12 @@ func New(limit, page int, orderBy []string) Datapaging {
 	}
 }
 
-//NoPagination return empty pagination
+// NoPagination return empty pagination
 func NoPagination() Datapaging {
 	return Datapaging{}
 }
 
-//IsNil check if the pagination object is empty
+// IsNil check if the pagination object is empty
 func (pagination *Datapaging) IsNil() bool {
 	if !pagination.WithLimit() && !pagination.WithPageOffset() && !pagination.WithOrderBy() {
 		return true
@@ -88,7 +88,7 @@ func (pagination *Datapaging) WithDateBetween() bool {
 	return false
 }
 
-//BuildQueryGORM build datapaging for GORM DB instance
+// BuildQueryGORM build datapaging for GORM DB instance
 func (pagination *Datapaging) BuildQueryGORM(db *gorm.DB) *gorm.DB {
 
 	if pagination.WithLimit() {
@@ -111,7 +111,7 @@ func (pagination *Datapaging) BuildQueryGORM(db *gorm.DB) *gorm.DB {
 	return db
 }
 
-//BuildQuery will add the pagination syntax into the raw sqlQuery
+// BuildQuery will add the pagination syntax into the raw sqlQuery
 func (pagination *Datapaging) BuildQuery(sqlQuery string) string {
 
 	if pagination.WithOrderBy() {

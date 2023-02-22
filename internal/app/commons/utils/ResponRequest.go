@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-//SecureResponse is struct
+// SecureResponse is struct
 type SecureResponse struct {
 	Status       bool        `json:"status"`
 	ResponseCode int         `json:"response_code"`
@@ -20,7 +20,7 @@ type SecureResponse struct {
 	Data         interface{} `json:"data"`
 }
 
-//recordCode is func record status code
+// recordCode is func record status code
 func generateResponse(record *loggers.Data, w http.ResponseWriter, code int, res *SecureResponse) {
 	response, err := json.Marshal(res)
 	if err != nil {
