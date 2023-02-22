@@ -20,7 +20,7 @@ const (
 	hidemsisdn = `((628|08)(31|32|33|38|591|598)\d{6,10}|\d{5,13})`
 )
 
-//Request struct
+// Request struct
 type Request struct {
 	Method  string
 	URL     string
@@ -42,7 +42,7 @@ func (r *respon) setMsg(value string) {
 	r.message = append(r.message, value)
 }
 
-//ComposeRequest is func to create request
+// ComposeRequest is func to create request
 func ComposeRequest(r Request) (*http.Request, error) {
 	req, err := http.NewRequest(r.Method, r.URL, r.Payload)
 	if err != nil {
@@ -160,7 +160,7 @@ func setBreaker(b *gobreaker.CircuitBreaker) *gobreaker.CircuitBreaker {
 	return b
 }
 
-//ReadBody function to read body and marshal
+// ReadBody function to read body and marshal
 func readBody(result io.ReadCloser, temp interface{}) ([]byte, error) {
 
 	err := json.NewDecoder(result).Decode(&temp)
@@ -176,7 +176,7 @@ func readBody(result io.ReadCloser, temp interface{}) ([]byte, error) {
 	return response, nil
 }
 
-//DoRequest is wrap function choose breaker
+// DoRequest is wrap function choose breaker
 func (r Request) DoRequest(record *loggers.Data) ([]byte, int, error) {
 	return chooseBreaker(record, r, nil)
 }
