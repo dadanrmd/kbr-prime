@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/pkg/log"
+	"kbrprime-be/internal/pkg/log"
 )
 
 type HandlerOption func(*HttpHandler)

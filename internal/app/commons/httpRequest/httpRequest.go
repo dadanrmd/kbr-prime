@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/loggers"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/utils"
+	"kbrprime-be/internal/app/commons/loggers"
+	"kbrprime-be/internal/app/commons/utils"
 )
 
 func Curl(record *loggers.Data, serviceName, method string, url string, body []byte, arrheader map[string]string) ([]byte, int, error) {

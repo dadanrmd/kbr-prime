@@ -5,9 +5,9 @@ import (
 	"flag"
 	"os"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/applicationConstants"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/migration"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/commons/applicationConstants"
+	"kbrprime-be/internal/app/migration"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"

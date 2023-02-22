@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/handler"
+	"kbrprime-be/internal/app/handler"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -14,6 +14,10 @@ import (
 
 func Router(opt handler.HandlerOption) *gin.Engine {
 	healthyHandler := handler.HealthyCheckHandler{
+		HandlerOption: opt,
+	}
+
+	showHandler := handler.ShowHandler{
 		HandlerOption: opt,
 	}
 
@@ -49,6 +53,14 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 	apiGroup := r.Group("/api/v1")
 	{
 		apiGroup.GET("healthy-check", healthyHandler.HealthyCheck)
+	}
+	showGroup := r.Group("/api/v1/show")
+	{
+		showGroup.GET("/all", showHandler.GetAll)
+		showGroup.GET("/latest-news", showHandler.LatestNews)
+		showGroup.GET("/latest-episodes", showHandler.LatestEpisodes)
+		showGroup.GET("/list-news", showHandler.ListNews)
+		showGroup.GET("/list-episodes", showHandler.ListEpisodes)
 	}
 
 	return r

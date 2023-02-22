@@ -1,6 +1,6 @@
 package healtyModel
 
-import "github.com/rizkianakbar/kbrprime-be/internal/app/model/helperModel"
+import "kbrprime-be/internal/app/model/helperModel"
 
 /* Table Definition */
 type Healty struct {

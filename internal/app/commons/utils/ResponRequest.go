@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/loggers"
+	"kbrprime-be/internal/app/commons/loggers"
 
 	_ "github.com/joho/godotenv/autoload" //buat jaga2
 	"github.com/spf13/cast"

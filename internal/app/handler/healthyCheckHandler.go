@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/loggers"
+	"kbrprime-be/internal/app/commons/loggers"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/utils"
+	"kbrprime-be/internal/app/commons/utils"
 
 	"github.com/gin-gonic/gin"
 )

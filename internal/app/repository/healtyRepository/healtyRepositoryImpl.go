@@ -1,7 +1,7 @@
 package healtyRepository
 
 import (
-	"github.com/rizkianakbar/kbrprime-be/internal/app/model/healtyModel"
+	"kbrprime-be/internal/app/model/healtyModel"
 
 	"gorm.io/gorm"
 )

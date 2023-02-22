@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/service"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/service"
 )
 
 // HandlerOption option for handler, including all service

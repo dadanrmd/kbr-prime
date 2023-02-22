@@ -3,9 +3,12 @@ package driver
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"time"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"time"
+	"gorm.io/gorm/logger"
 
 	_ "github.com/go-sql-driver/mysql" // defines mysql driver used
 )
@@ -38,7 +41,13 @@ func NewMysqlDatabase(option DBMysqlOption) (*gorm.DB, error) {
 
 	gormDB, err := gorm.Open(mysql.New(mysql.Config{
 		Conn: db,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Error),
+		NowFunc: func() time.Time {
+			ti, _ := time.LoadLocation(os.Getenv("LOG_TIME_ZONE"))
+			return time.Now().In(ti)
+		},
+	})
 	if err != nil {
 		return nil, err
 	}

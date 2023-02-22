@@ -3,10 +3,10 @@ package healtyService
 import (
 	"errors"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/model/healtyModel"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/repository/healtyRepository"
+	"kbrprime-be/internal/app/model/healtyModel"
+	"kbrprime-be/internal/app/repository/healtyRepository"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/loggers"
+	"kbrprime-be/internal/app/commons/loggers"
 )
 
 var (

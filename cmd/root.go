@@ -6,14 +6,16 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/rizkianakbar/kbrprime-be/config"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/appcontext"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/repository"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/repository/healtyRepository"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/server"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/service"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/service/healtyService"
+	"kbrprime-be/config"
+	"kbrprime-be/internal/app/appcontext"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/repository"
+	"kbrprime-be/internal/app/repository/healtyRepository"
+	"kbrprime-be/internal/app/repository/showRepository"
+	"kbrprime-be/internal/app/server"
+	"kbrprime-be/internal/app/service"
+	"kbrprime-be/internal/app/service/healtyService"
+	"kbrprime-be/internal/app/service/showService"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
@@ -128,6 +130,7 @@ func start() {
 func wiringRepository(repoOption repository.Option) *repository.Repositories {
 	repo := repository.Repositories{
 		HealtyRepository: healtyRepository.NewHealtyRepository(repoOption.Db),
+		ShowRepository:   showRepository.NewShowRepository(repoOption.Db),
 	}
 
 	return &repo
@@ -137,6 +140,7 @@ func wiringService(serviceOption service.Option) *service.Services {
 	// wiring up all services
 	svc := service.Services{
 		HealtyService: healtyService.NewHealtyService(serviceOption.HealtyRepository),
+		ShowService:   showService.NewShowService(serviceOption.ShowRepository),
 	}
 	return &svc
 }

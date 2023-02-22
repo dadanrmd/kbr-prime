@@ -10,7 +10,7 @@ import (
 	"net/http/httputil"
 	"time"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/loggers"
+	"kbrprime-be/internal/app/commons/loggers"
 
 	"github.com/sony/gobreaker"
 	"github.com/spf13/cast"

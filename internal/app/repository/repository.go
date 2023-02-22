@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/repository/healtyRepository"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/repository/healtyRepository"
+	"kbrprime-be/internal/app/repository/showRepository"
 )
 
 // Option anything any repo object needed
@@ -12,4 +13,5 @@ type Option struct {
 
 type Repositories struct {
 	HealtyRepository healtyRepository.IHealtyRepository
+	ShowRepository   showRepository.IShowRepository
 }

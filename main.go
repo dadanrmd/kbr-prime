@@ -6,9 +6,10 @@ import (
 	"runtime"
 	"time"
 
+	"kbrprime-be/cmd"
+	"kbrprime-be/internal/app/commons/logHelper"
+
 	"github.com/joho/godotenv"
-	"github.com/rizkianakbar/kbrprime-be/cmd"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons/logHelper"
 	"github.com/spf13/cast"
 
 	"github.com/rs/zerolog"

@@ -3,7 +3,7 @@ package log
 import (
 	"context"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/pkg/ctxkeys"
+	"kbrprime-be/internal/pkg/ctxkeys"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

@@ -6,9 +6,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/handler"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/service"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/handler"
+	"kbrprime-be/internal/app/service"
 
 	"github.com/rs/zerolog/log"
 )

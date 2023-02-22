@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/rizkianakbar/kbrprime-be/config"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/driver"
+	"kbrprime-be/config"
+	"kbrprime-be/internal/app/driver"
 
 	"gorm.io/gorm"
 

@@ -1,7 +1,7 @@
 package commons
 
 import (
-	"github.com/rizkianakbar/kbrprime-be/internal/app/appcontext"
+	"kbrprime-be/internal/app/appcontext"
 
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"

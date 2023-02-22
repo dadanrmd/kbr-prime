@@ -1,9 +1,10 @@
 package service
 
 import (
-	"github.com/rizkianakbar/kbrprime-be/internal/app/commons"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/repository"
-	"github.com/rizkianakbar/kbrprime-be/internal/app/service/healtyService"
+	"kbrprime-be/internal/app/commons"
+	"kbrprime-be/internal/app/repository"
+	"kbrprime-be/internal/app/service/healtyService"
+	"kbrprime-be/internal/app/service/showService"
 )
 
 // Option anything any service object needed
@@ -14,4 +15,5 @@ type Option struct {
 
 type Services struct {
 	HealtyService healtyService.IHealtyService
+	ShowService   showService.IShowService
 }
