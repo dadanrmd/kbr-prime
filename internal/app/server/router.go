@@ -17,7 +17,27 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 		HandlerOption: opt,
 	}
 
+	authHandler := handler.AuthHandler{
+		HandlerOption: opt,
+	}
+
+	userHandler := handler.UserHandler{
+		HandlerOption: opt,
+	}
+
 	showHandler := handler.ShowHandler{
+		HandlerOption: opt,
+	}
+
+	categoriesHandler := handler.CategoriesHandler{
+		HandlerOption: opt,
+	}
+
+	listenHandler := handler.ListenHandler{
+		HandlerOption: opt,
+	}
+
+	likeHandler := handler.LikeHandler{
 		HandlerOption: opt,
 	}
 
@@ -52,15 +72,36 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 
 	apiGroup := r.Group("/api/v1")
 	{
-		apiGroup.GET("healthy-check", healthyHandler.HealthyCheck)
+		apiGroup.GET("/healthy-check", healthyHandler.HealthyCheck)
+
+		apiGroup.GET("/berita-terbaru", showHandler.LatestNews)
+		apiGroup.GET("/episode-terbaru", showHandler.LatestEpisodes)
+		apiGroup.GET("/list-berita", showHandler.ListNews)
+		apiGroup.GET("/list-episode", showHandler.ListEpisodes)
+		apiGroup.POST("/register", userHandler.AddNewUser)
+		apiGroup.POST("/record", listenHandler.RecordData)
+		apiGroup.POST("/like", likeHandler.LikeEpisode)
 	}
+	authAPIGroupUnsecured := r.Group("/api/v1/auth")
+	{
+		authAPIGroupUnsecured.POST("/login", authHandler.Login)
+	}
+	userGroup := r.Group("/api/v1/user", opt.AuthMiddleware.AuthorizeUser())
+	{
+		userGroup.POST("/register", userHandler.AddNewUser)
+		userGroup.GET("/all", userHandler.GetAllUser)
+		userGroup.PUT("/update", userHandler.UpdateUser)
+		userGroup.GET("/:id", userHandler.GetDetailUser)
+	}
+
 	showGroup := r.Group("/api/v1/show")
 	{
 		showGroup.GET("/all", showHandler.GetAll)
-		showGroup.GET("/latest-news", showHandler.LatestNews)
-		showGroup.GET("/latest-episodes", showHandler.LatestEpisodes)
-		showGroup.GET("/list-news", showHandler.ListNews)
-		showGroup.GET("/list-episodes", showHandler.ListEpisodes)
+	}
+
+	categroriesGroup := r.Group("/api/v1/categories")
+	{
+		categroriesGroup.GET("/list", categoriesHandler.GetAll)
 	}
 
 	return r

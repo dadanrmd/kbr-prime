@@ -78,10 +78,8 @@ func runMigration(opt *commons.Options, direction int) {
 	switch direction {
 	case applicationConstants.MigrateUp:
 		errMigration = migration.MigrateUp(migrationConf)
-		break
 	case applicationConstants.MigrateDown:
 		errMigration = migration.MigrateDown(migrationConf)
-		break
 	default:
 		errMigration = errors.New("Unknown migration direction")
 	}

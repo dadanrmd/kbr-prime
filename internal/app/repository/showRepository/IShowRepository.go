@@ -7,8 +7,8 @@ import (
 
 type IShowRepository interface {
 	FindAll() (data *[]showModel.Show, err error)
-	GetLatestNews() (data *[]showModel.Show, err error)
-	GetLatestEpisodes() (data *[]showModel.Show, err error)
-	GetNewsByStatusTags(paging datapaging.Datapaging, tag string) (data *[]showModel.Show, count int64, err error)
-	GetEpisodesByStatusTags(paging datapaging.Datapaging, tag string) (data *[]showModel.Show, count int64, err error)
+	GetLatestNews(categoryID []int64) (data *[]showModel.Show, err error)
+	GetLatestEpisodes(categoryID []int64) (data *[]showModel.Show, err error)
+	GetNewsByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]showModel.Show, count int64, err error)
+	GetEpisodesByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]showModel.Show, count int64, err error)
 }

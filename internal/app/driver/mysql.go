@@ -42,7 +42,7 @@ func NewMysqlDatabase(option DBMysqlOption) (*gorm.DB, error) {
 	gormDB, err := gorm.Open(mysql.New(mysql.Config{
 		Conn: db,
 	}), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Error),
+		Logger: logger.Default.LogMode(logger.Info),
 		NowFunc: func() time.Time {
 			ti, _ := time.LoadLocation(os.Getenv("LOG_TIME_ZONE"))
 			return time.Now().In(ti)

@@ -19,18 +19,18 @@ func (h showRepository) FindAll() (data *[]showModel.Show, err error) {
 	return
 }
 
-func (h showRepository) GetLatestNews() (data *[]showModel.Show, err error) {
-	err = h.db.Where("tags = ? and date_created < curdate() - INTERVAL DAYOFWEEK(curdate()) DAY and status = ?", "news", "AKTIF").Limit(4).Order("date_created desc").Find(&data).Error
+func (h showRepository) GetLatestNews(categoryID []int64) (data *[]showModel.Show, err error) {
+	err = h.db.Where("category in ? and date_created < curdate() - INTERVAL DAYOFWEEK(curdate()) DAY and status = ?", categoryID, "AKTIF").Limit(4).Order("date_created desc").Find(&data).Error
 	return
 }
 
-func (h showRepository) GetLatestEpisodes() (data *[]showModel.Show, err error) {
-	err = h.db.Where("tags != ? and date_created < curdate() - INTERVAL 1 DAY and status = ?", "news", "AKTIF").Limit(4).Order("date_created desc").Find(&data).Error
+func (h showRepository) GetLatestEpisodes(categoryID []int64) (data *[]showModel.Show, err error) {
+	err = h.db.Where("category not in ? and date_created < curdate() - INTERVAL 1 DAY and status = ?", categoryID, "AKTIF").Limit(4).Order("date_created desc").Find(&data).Error
 	return
 }
 
-func (h showRepository) GetNewsByStatusTags(paging datapaging.Datapaging, tag string) (data *[]showModel.Show, count int64, err error) {
-	db := h.db.Model(&data).Where("tags = ?", tag)
+func (h showRepository) GetNewsByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]showModel.Show, count int64, err error) {
+	db := h.db.Model(&data).Where("category in ?", categoryID)
 	db.Count(&count)
 	if paging.Page != 0 {
 		pg := datapaging.New(paging.Limit, paging.Page, []string{})
@@ -41,8 +41,8 @@ func (h showRepository) GetNewsByStatusTags(paging datapaging.Datapaging, tag st
 	return data, count, err
 }
 
-func (h showRepository) GetEpisodesByStatusTags(paging datapaging.Datapaging, tag string) (data *[]showModel.Show, count int64, err error) {
-	db := h.db.Model(&data).Where("tags != ?", tag)
+func (h showRepository) GetEpisodesByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]showModel.Show, count int64, err error) {
+	db := h.db.Model(&data).Where("category not in ?", categoryID)
 	db.Count(&count)
 	if paging.Page != 0 {
 		pg := datapaging.New(paging.Limit, paging.Page, []string{})

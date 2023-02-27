@@ -3,6 +3,7 @@ package showService
 import (
 	"errors"
 	"kbrprime-be/internal/app/model/showModel"
+	"kbrprime-be/internal/app/repository/categoriesRepository"
 	"kbrprime-be/internal/app/repository/showRepository"
 
 	datapaging "kbrprime-be/internal/app/commons/dataPagingHelper"
@@ -15,11 +16,12 @@ var (
 )
 
 type showService struct {
-	showRepo showRepository.IShowRepository
+	showRepo       showRepository.IShowRepository
+	categoriesRepo categoriesRepository.ICategoriesRepository
 }
 
-func NewShowService(show showRepository.IShowRepository) IShowService {
-	return &showService{showRepo: show}
+func NewShowService(showRepo showRepository.IShowRepository, categoriesRepo categoriesRepository.ICategoriesRepository) IShowService {
+	return &showService{showRepo, categoriesRepo}
 }
 
 func (h showService) FindAllShow(record *loggers.Data) (data *[]showModel.Show, err error) {
@@ -35,7 +37,15 @@ func (h showService) FindAllShow(record *loggers.Data) (data *[]showModel.Show, 
 
 func (h showService) LatestNews(record *loggers.Data) (data *[]showModel.Show, err error) {
 	loggers.Logf(record, "Info, LatestNews")
-	data, err = h.showRepo.GetLatestNews()
+	var categoryID []int64
+	category, err := h.categoriesRepo.FindByCategoryScope("News")
+	if err != nil {
+		loggers.Logf(record, "Error, FindByCategoryScope")
+	}
+	for _, v := range *category {
+		categoryID = append(categoryID, v.IdCategory)
+	}
+	data, err = h.showRepo.GetLatestNews(categoryID)
 	if err != nil {
 		loggers.Logf(record, "Error, GetLatestNews")
 		err = errBerita
@@ -45,8 +55,16 @@ func (h showService) LatestNews(record *loggers.Data) (data *[]showModel.Show, e
 }
 
 func (h showService) LatestEpisodes(record *loggers.Data) (data *[]showModel.Show, err error) {
-	loggers.Logf(record, "Info, LatestNews")
-	data, err = h.showRepo.GetLatestEpisodes()
+	loggers.Logf(record, "Info, LatestEpisodes")
+	var categoryID []int64
+	category, err := h.categoriesRepo.FindByCategoryScope("News")
+	if err != nil {
+		loggers.Logf(record, "Error, FindByCategoryScope")
+	}
+	for _, v := range *category {
+		categoryID = append(categoryID, v.IdCategory)
+	}
+	data, err = h.showRepo.GetLatestEpisodes(categoryID)
 	if err != nil {
 		loggers.Logf(record, "Error, GetLatestEpisodes")
 		err = errBerita
@@ -57,7 +75,15 @@ func (h showService) LatestEpisodes(record *loggers.Data) (data *[]showModel.Sho
 
 func (h showService) GetNewsWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]showModel.Show, count int64, err error) {
 	loggers.Logf(record, "Info, GetNewsWithPaging")
-	data, count, err = h.showRepo.GetNewsByStatusTags(paging, "news")
+	var categoryID []int64
+	category, err := h.categoriesRepo.FindByCategoryScope("News")
+	if err != nil {
+		loggers.Logf(record, "Error, FindByCategoryScope")
+	}
+	for _, v := range *category {
+		categoryID = append(categoryID, v.IdCategory)
+	}
+	data, count, err = h.showRepo.GetNewsByStatusTags(paging, categoryID)
 	if err != nil {
 		err = errBerita
 		loggers.Logf(record, "Error, GetNewsByStatusTags")
@@ -68,7 +94,15 @@ func (h showService) GetNewsWithPaging(record *loggers.Data, paging datapaging.D
 
 func (h showService) GetEpisodesWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]showModel.Show, count int64, err error) {
 	loggers.Logf(record, "Info, GetEpisodesWithPaging")
-	data, count, err = h.showRepo.GetEpisodesByStatusTags(paging, "news")
+	var categoryID []int64
+	category, err := h.categoriesRepo.FindByCategoryScope("News")
+	if err != nil {
+		loggers.Logf(record, "Error, FindByCategoryScope")
+	}
+	for _, v := range *category {
+		categoryID = append(categoryID, v.IdCategory)
+	}
+	data, count, err = h.showRepo.GetEpisodesByStatusTags(paging, categoryID)
 	if err != nil {
 		err = errEpisode
 		loggers.Logf(record, "Error, GetEpisodesByStatusTags")
