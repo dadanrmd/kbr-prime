@@ -81,6 +81,8 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 		apiGroup.POST("/register", userHandler.AddNewUser)
 		apiGroup.POST("/record", listenHandler.RecordData)
 		apiGroup.POST("/like", likeHandler.LikeEpisode)
+		apiGroup.GET("/teratas-minggu-ini", showHandler.TopThree)
+		apiGroup.GET("/sorotan", showHandler.Sorotan)
 	}
 	authAPIGroupUnsecured := r.Group("/api/v1/auth")
 	{

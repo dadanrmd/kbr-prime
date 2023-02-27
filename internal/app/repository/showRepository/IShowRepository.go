@@ -12,4 +12,5 @@ type IShowRepository interface {
 	GetLatestEpisodes(categoryID []int64) (data *[]podcastModel.Podcast, err error)
 	GetNewsByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]podcastModel.Podcast, count int64, err error)
 	GetEpisodesByStatusTags(paging datapaging.Datapaging, categoryID []int64) (data *[]podcastModel.Podcast, count int64, err error)
+	GetTopByLimit(limit, offset int) (data *[]podcastModel.Podcast, err error)
 }

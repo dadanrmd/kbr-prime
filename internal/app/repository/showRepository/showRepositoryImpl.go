@@ -57,3 +57,12 @@ func (h showRepository) GetEpisodesByStatusTags(paging datapaging.Datapaging, ca
 
 	return data, count, err
 }
+
+func (h showRepository) GetTopByLimit(limit, offset int) (data *[]podcastModel.Podcast, err error) {
+	db := h.db.Model(&podcastModel.Podcast{})
+	db.Joins("JOIN kbr_shows on kbr_shows.id_show = kbr_podcasts.id_show")
+	db.Joins("LEFT JOIN kbr_listen on kbr_listen.episode_id = kbr_podcasts.id_podcast")
+	db.Where("kbr_podcasts.publish_date < curdate() - INTERVAL 1 DAY and kbr_shows.status = ?", "AKTIF").Limit(limit).Offset(offset).Order("kbr_podcasts.publish_date desc")
+	err = db.Find(&data).Error
+	return
+}

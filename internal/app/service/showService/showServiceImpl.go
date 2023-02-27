@@ -12,8 +12,9 @@ import (
 )
 
 var (
-	errBerita  = errors.New("Berita tidak ada")
-	errEpisode = errors.New("Episode tidak ada")
+	errBerita   = errors.New("Berita tidak ada")
+	errEpisode  = errors.New("Episode tidak ada")
+	errTopThree = errors.New("Teratas minggu ini tidak ada")
 )
 
 type showService struct {
@@ -107,6 +108,28 @@ func (h showService) GetEpisodesWithPaging(record *loggers.Data, paging datapagi
 	if err != nil {
 		err = errEpisode
 		loggers.Logf(record, "Error, GetEpisodesByStatusTags")
+		return
+	}
+	return
+}
+
+func (h showService) GetTopThree(record *loggers.Data) (data *[]podcastModel.Podcast, err error) {
+	loggers.Logf(record, "Info, GetTopThree")
+	data, err = h.showRepo.GetTopByLimit(3, 0)
+	if err != nil {
+		err = errTopThree
+		loggers.Logf(record, "Error, GetTopByLimit")
+		return
+	}
+	return
+}
+
+func (h showService) GetSorotan(record *loggers.Data) (data *[]podcastModel.Podcast, err error) {
+	loggers.Logf(record, "Info, GetSorotan")
+	data, err = h.showRepo.GetTopByLimit(12, 3)
+	if err != nil {
+		err = errTopThree
+		loggers.Logf(record, "Error, GetTopByLimit")
 		return
 	}
 	return

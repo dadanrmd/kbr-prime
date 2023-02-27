@@ -89,3 +89,23 @@ func (handler ShowHandler) ListEpisodes(c *gin.Context) {
 	}
 	utils.BasicResponse(record, c.Writer, true, http.StatusOK, data, "successfully")
 }
+
+func (handler ShowHandler) TopThree(c *gin.Context) {
+	record := loggers.StartRecord(c.Request)
+	getAll, err := handler.ShowService.GetTopThree(record)
+	if err != nil {
+		utils.BasicResponse(record, c.Writer, false, http.StatusInternalServerError, err.Error(), "")
+		return
+	}
+	utils.BasicResponse(record, c.Writer, true, http.StatusOK, getAll, "Success")
+}
+
+func (handler ShowHandler) Sorotan(c *gin.Context) {
+	record := loggers.StartRecord(c.Request)
+	getAll, err := handler.ShowService.GetSorotan(record)
+	if err != nil {
+		utils.BasicResponse(record, c.Writer, false, http.StatusInternalServerError, err.Error(), "")
+		return
+	}
+	utils.BasicResponse(record, c.Writer, true, http.StatusOK, getAll, "Success")
+}
