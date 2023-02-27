@@ -2,6 +2,7 @@ package showService
 
 import (
 	"errors"
+	"kbrprime-be/internal/app/model/podcastModel"
 	"kbrprime-be/internal/app/model/showModel"
 	"kbrprime-be/internal/app/repository/categoriesRepository"
 	"kbrprime-be/internal/app/repository/showRepository"
@@ -35,7 +36,7 @@ func (h showService) FindAllShow(record *loggers.Data) (data *[]showModel.Show, 
 	return
 }
 
-func (h showService) LatestNews(record *loggers.Data) (data *[]showModel.Show, err error) {
+func (h showService) LatestNews(record *loggers.Data) (data *[]podcastModel.Podcast, err error) {
 	loggers.Logf(record, "Info, LatestNews")
 	var categoryID []int64
 	category, err := h.categoriesRepo.FindByCategoryScope("News")
@@ -54,7 +55,7 @@ func (h showService) LatestNews(record *loggers.Data) (data *[]showModel.Show, e
 	return
 }
 
-func (h showService) LatestEpisodes(record *loggers.Data) (data *[]showModel.Show, err error) {
+func (h showService) LatestEpisodes(record *loggers.Data) (data *[]podcastModel.Podcast, err error) {
 	loggers.Logf(record, "Info, LatestEpisodes")
 	var categoryID []int64
 	category, err := h.categoriesRepo.FindByCategoryScope("News")
@@ -73,7 +74,7 @@ func (h showService) LatestEpisodes(record *loggers.Data) (data *[]showModel.Sho
 	return
 }
 
-func (h showService) GetNewsWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]showModel.Show, count int64, err error) {
+func (h showService) GetNewsWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]podcastModel.Podcast, count int64, err error) {
 	loggers.Logf(record, "Info, GetNewsWithPaging")
 	var categoryID []int64
 	category, err := h.categoriesRepo.FindByCategoryScope("News")
@@ -92,7 +93,7 @@ func (h showService) GetNewsWithPaging(record *loggers.Data, paging datapaging.D
 	return
 }
 
-func (h showService) GetEpisodesWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]showModel.Show, count int64, err error) {
+func (h showService) GetEpisodesWithPaging(record *loggers.Data, paging datapaging.Datapaging) (data *[]podcastModel.Podcast, count int64, err error) {
 	loggers.Logf(record, "Info, GetEpisodesWithPaging")
 	var categoryID []int64
 	category, err := h.categoriesRepo.FindByCategoryScope("News")
