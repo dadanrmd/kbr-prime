@@ -7,4 +7,5 @@ import (
 
 type IAuthService interface {
 	Login(record *loggers.Data, loginReq authModel.LoginReq) (loginRes authModel.LoginRes, err error)
+	RevokeToken(token string) error
 }

@@ -23,7 +23,7 @@ func NewCategoriesService(categoriesRepo categoriesRepository.ICategoriesReposit
 func (h categoriesService) FindAllCategories(record *loggers.Data) (data *[]categoriesModel.Categories, err error) {
 	loggers.Logf(record, "Info, FindAllCategories")
 	// data, err = h.categoriesRepo.FindAll()
-	data, err = h.categoriesRepo.FindByCategoryScope("News")
+	data, err = h.categoriesRepo.FindAll()
 	if err != nil {
 		loggers.Logf(record, "Error, FindAll")
 		err = errKategori

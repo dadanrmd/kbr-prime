@@ -5,10 +5,12 @@ import (
 	"kbrprime-be/internal/app/commons/jwtHelper"
 	"kbrprime-be/internal/app/commons/loggers"
 	"kbrprime-be/internal/app/commons/symmetricHash"
+	"kbrprime-be/internal/app/middleware/authMiddleware"
 	"kbrprime-be/internal/app/model/authModel"
 	"kbrprime-be/internal/app/repository/userRepository"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -89,4 +91,21 @@ func (a authUseCase) Login(record *loggers.Data, loginReq authModel.LoginReq) (l
 
 	loginRes.Token = jwtToken
 	return loginRes, nil
+}
+
+func (a authUseCase) RevokeToken(token string) error {
+	//extract token claims
+	//Extract JWT Token from Bearer
+	jwtTokenSplit := strings.Split(token, "Bearer ")
+	if jwtTokenSplit[1] == "" {
+		return authMiddleware.ErrInvalidToken
+	}
+	tokenSegment := jwtTokenSplit[1]
+
+	_, err := jwtHelper.ExtractClaims(tokenSegment)
+	if err != nil {
+		return authMiddleware.ErrInvalidToken
+	}
+
+	return nil
 }

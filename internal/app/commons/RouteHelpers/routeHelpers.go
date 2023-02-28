@@ -1,6 +1,7 @@
 package RouteHelpers
 
 import (
+	"encoding/json"
 	"errors"
 	"kbrprime-be/internal/app/model/userModel"
 
@@ -22,11 +23,16 @@ func GetUserFromJWTContext(c *gin.Context) (*userModel.User, error) {
 	if user == "" {
 		return nil, ErrorContextNotExist
 	}
-
-	userData, ok := user.(*userModel.User)
-	if !ok {
+	jsonData, err := json.Marshal(user)
+	if err != nil {
 		return nil, ErrorParsingUserModel
 	}
 
-	return userData, nil
+	var userData userModel.User
+	err = json.Unmarshal(jsonData, &userData)
+	if err != nil {
+		return nil, ErrorParsingUserModel
+	}
+
+	return &userData, nil
 }

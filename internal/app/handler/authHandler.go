@@ -4,8 +4,10 @@ import (
 	"kbrprime-be/internal/app/commons/jsonHttpResponse"
 	"kbrprime-be/internal/app/commons/loggers"
 	"kbrprime-be/internal/app/commons/requestvalidationerror"
+	"kbrprime-be/internal/app/commons/utils"
 	"kbrprime-be/internal/app/model/authModel"
 	"kbrprime-be/internal/app/service/authService"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,37 +27,28 @@ func (authDelivery AuthHandler) Login(c *gin.Context) {
 			jsonHttpResponse.NewFailedMissingRequiredFieldResponse(c, validations)
 			return
 		}
-
-		jsonHttpResponse.NewFailedBadRequestResponse(c, errBind.Error())
+		utils.BasicResponse(record, c.Writer, false, http.StatusBadRequest, errBind.Error(), "")
 		return
 	}
 
 	loginRes, err := authDelivery.AuthService.Login(record, request)
 	if err != nil {
 		if err == authService.ErrInvalidCredential {
-			errPayload := jsonHttpResponse.FailedResponse{
-				Status:       jsonHttpResponse.FailedStatus,
-				ResponseCode: "00",
-				Message:      err.Error(),
-			}
-			jsonHttpResponse.Unauthorized(c, errPayload)
+			utils.BasicResponse(record, c.Writer, false, http.StatusUnauthorized, err.Error(), "")
 			return
 		}
-		errPayload := jsonHttpResponse.FailedResponse{
-			Status:       jsonHttpResponse.FailedStatus,
-			ResponseCode: "00",
-			Message:      err.Error(),
-		}
-		jsonHttpResponse.InternalServerError(c, errPayload)
+		utils.BasicResponse(record, c.Writer, false, http.StatusInternalServerError, err.Error(), "")
 		return
 	}
+	utils.BasicResponse(record, c.Writer, true, http.StatusOK, loginRes, "Success")
+}
 
-	successPayload := jsonHttpResponse.SuccessResponse{
-		Status:       jsonHttpResponse.SuccessStatus,
-		ResponseCode: "00",
-		Message:      "",
-		Data:         loginRes,
+func (authDelivery AuthHandler) RevokeToken(c *gin.Context) {
+	record := loggers.StartRecord(c.Request)
+	err := authDelivery.AuthService.RevokeToken(c.GetHeader("Authorization"))
+	if err != nil {
+		utils.BasicResponse(record, c.Writer, false, http.StatusInternalServerError, err.Error(), "")
+		return
 	}
-	jsonHttpResponse.OK(c, successPayload)
-	return
+	utils.BasicResponse(record, c.Writer, true, http.StatusOK, nil, "token revoked successfully")
 }

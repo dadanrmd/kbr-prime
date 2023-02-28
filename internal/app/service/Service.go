@@ -9,6 +9,7 @@ import (
 	"kbrprime-be/internal/app/service/healtyService"
 	"kbrprime-be/internal/app/service/likeService"
 	"kbrprime-be/internal/app/service/listenService"
+	"kbrprime-be/internal/app/service/playListService"
 	"kbrprime-be/internal/app/service/showService"
 	"kbrprime-be/internal/app/service/userService"
 )
@@ -28,4 +29,5 @@ type Services struct {
 	UserService       userService.IUserService
 	ListenService     listenService.IListenService
 	LikeService       likeService.ILikeService
+	PlayListService   playListService.IPlayListService
 }

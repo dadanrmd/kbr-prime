@@ -40,6 +40,9 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 	likeHandler := handler.LikeHandler{
 		HandlerOption: opt,
 	}
+	playListHandler := handler.PlayListHandler{
+		HandlerOption: opt,
+	}
 
 	setMode := cast.ToBool(os.Getenv("DEBUG_MODE"))
 	if setMode {
@@ -94,6 +97,14 @@ func Router(opt handler.HandlerOption) *gin.Engine {
 		userGroup.GET("/all", userHandler.GetAllUser)
 		userGroup.PUT("/update", userHandler.UpdateUser)
 		userGroup.GET("/:id", userHandler.GetDetailUser)
+		userGroup.GET("/logout", authHandler.RevokeToken)
+	}
+
+	playListGroup := r.Group("/api/v1/play-list", opt.AuthMiddleware.AuthorizeUser())
+	{
+		playListGroup.GET("/", playListHandler.GetPlayList)
+		playListGroup.POST("/add", playListHandler.AddPlayList)
+		playListGroup.DELETE("delete/:id", playListHandler.DeletePlayList)
 	}
 
 	showGroup := r.Group("/api/v1/show")

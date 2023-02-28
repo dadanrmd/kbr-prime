@@ -15,6 +15,7 @@ import (
 	"kbrprime-be/internal/app/repository/healtyRepository"
 	"kbrprime-be/internal/app/repository/likeRepository"
 	"kbrprime-be/internal/app/repository/listenRepository"
+	"kbrprime-be/internal/app/repository/playListRepository"
 	"kbrprime-be/internal/app/repository/showRepository"
 	"kbrprime-be/internal/app/repository/userRepository"
 	"kbrprime-be/internal/app/server"
@@ -24,6 +25,7 @@ import (
 	"kbrprime-be/internal/app/service/healtyService"
 	"kbrprime-be/internal/app/service/likeService"
 	"kbrprime-be/internal/app/service/listenService"
+	"kbrprime-be/internal/app/service/playListService"
 	"kbrprime-be/internal/app/service/showService"
 	"kbrprime-be/internal/app/service/userService"
 
@@ -145,6 +147,7 @@ func wiringRepository(repoOption repository.Option) *repository.Repositories {
 		UserRepository:       userRepository.NewUserRepository(repoOption.Db),
 		ListenRepository:     listenRepository.NewListenRepository(repoOption.Db),
 		LikeRepository:       likeRepository.NewLikeRepository(repoOption.Db),
+		PlayListRepository:   playListRepository.NewPlayListRepository(repoOption.Db),
 	}
 
 	return &repo
@@ -161,6 +164,7 @@ func wiringService(serviceOption service.Option) *service.Services {
 		UserService:       userService.NewUserService(serviceOption.UserRepository),
 		ListenService:     listenService.NewListenService(serviceOption.ListenRepository),
 		LikeService:       likeService.NewLikeService(serviceOption.LikeRepository),
+		PlayListService:   playListService.NewPlayListService(serviceOption.PlayListRepository),
 	}
 	return &svc
 }

@@ -18,7 +18,7 @@ func NewUserRepository(db *gorm.DB) IUserRepository {
 func (d userRepository) FindUserByID(id int64) (*userModel.User, error) {
 	var userData userModel.User
 	db := d.conn.Preload(clause.Associations)
-	db.First(&userData, "id=?", id)
+	db.First(&userData, "id_user=?", id)
 	return &userData, db.Error
 }
 

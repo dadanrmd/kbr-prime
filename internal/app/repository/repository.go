@@ -6,6 +6,7 @@ import (
 	"kbrprime-be/internal/app/repository/healtyRepository"
 	"kbrprime-be/internal/app/repository/likeRepository"
 	"kbrprime-be/internal/app/repository/listenRepository"
+	"kbrprime-be/internal/app/repository/playListRepository"
 	"kbrprime-be/internal/app/repository/showRepository"
 	"kbrprime-be/internal/app/repository/userRepository"
 )
@@ -22,4 +23,5 @@ type Repositories struct {
 	UserRepository       userRepository.IUserRepository
 	ListenRepository     listenRepository.IListenRepository
 	LikeRepository       likeRepository.ILikeRepository
+	PlayListRepository   playListRepository.IPlayListRepository
 }
